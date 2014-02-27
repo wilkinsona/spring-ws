@@ -33,7 +33,7 @@ import org.springframework.ws.soap.SoapVersion;
 import org.springframework.ws.transport.MockTransportOutputStream;
 import org.springframework.xml.transform.StringSource;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

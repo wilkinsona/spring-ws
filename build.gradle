@@ -11,8 +11,38 @@ buildscript {
 configure(allprojects) {
 	group = "org.springframework.ws"
 
-	ext.springVersion = "3.2.4.RELEASE"
-	ext.axiomVersion = "1.2.14"
+	ext {
+		activeMqVersion = "5.9.0"
+		aspectjVersion = "1.8.0.M1"
+		axiomVersion = "1.2.14"
+		commonsHttpClientVersion = "3.1"
+		commonsLoggingVersion = "1.1.3"
+		dom4jVersion = "1.6.1"
+		easymockVersion = "3.2"
+		ehcacheVersion = "2.8.1"
+		ejb21SpecVersion = "1.1"
+		httpComponentsHttpClientVersion = "4.3.2"
+		javaxMailVersion = "1.4.7"
+		jaxenVersion = "1.1.6"
+		jdomVersion = "2.0.2"
+		jettyVersion = "6.1.26"
+		jms11SpecVersion = "1.1.1"
+		junitVersion = "4.11"
+		log4jVersion = "1.2.17"
+		mockJavaMailVersion = "1.7" // Latest version where getMessages() works
+		saajImplVersion = "1.3.23"
+		servletApiVersion = "3.0.1"
+		smackVersion = "3.2.1" // 3.4.1 is available, but is not in any Maven repo
+		springSecurityVersion = "4.0.0.DEPENDENCIES"
+		springVersion = "4.0.3.DEPENDENCIES"
+		woodstoxVersion = "4.2.0"
+		wsdl4jVersion = "1.6.3"
+		wss4jVersion = "1.6.9"
+		xmlSchemaVersion = "2.1.0"
+		xmlUnitVersion = "1.1"
+		xwsSecurityVersion = "3.0"
+		xomVersion = "1.2.5"
+	}
 
 	apply plugin: "java"
 	apply plugin: "propdeps-idea"
@@ -55,17 +85,20 @@ configure(allprojects) {
 	}
 
 	repositories {
+		mavenLocal()
+		mavenCentral()
 		maven { url 'http://repo.spring.io/libs-release' }
+		maven { url 'http://repo.spring.io/libs-milestone' }
 	}
 
 	dependencies {
-		compile("commons-logging:commons-logging:1.1.1")
+		compile("commons-logging:commons-logging:$commonsLoggingVersion")
 		compile("org.springframework:spring-core:$springVersion")
 
-		testCompile("junit:junit:4.10")
-		testCompile("org.easymock:easymock:3.1")
-		testCompile("xmlunit:xmlunit:1.1")
-		testRuntime("org.codehaus.woodstox:woodstox-core-asl:4.1.3")
+		testCompile("junit:junit:$junitVersion")
+		testCompile("org.easymock:easymock:$easymockVersion")
+		testCompile("xmlunit:xmlunit:$xmlUnitVersion")
+		testRuntime("org.codehaus.woodstox:woodstox-core-asl:${woodstoxVersion}")
 	}
 
 	ext.javadocLinks = [
@@ -137,8 +170,8 @@ project('spring-xml') {
 		compile("org.springframework:spring-context:$springVersion")
 
 		//XML
-		optional("org.apache.ws.xmlschema:xmlschema-core:2.0.2")
-		optional("jaxen:jaxen:1.1.4")
+		optional("org.apache.ws.xmlschema:xmlschema-core:$xmlSchemaVersion")
+		optional("jaxen:jaxen:$jaxenVersion")
 	}
 }
 
@@ -156,14 +189,14 @@ project('spring-ws-core') {
 		testCompile("org.springframework:spring-test:$springVersion")
 
 		// XML
-		optional("org.jdom:jdom:2.0.1")
-		optional("dom4j:dom4j:1.6.1")
-		optional("xom:xom:1.2.5") {
+		optional("org.jdom:jdom:$jdomVersion")
+		optional("dom4j:dom4j:$dom4jVersion")
+		optional("xom:xom:$xomVersion") {
 			exclude group: 'xml-apis', module: 'xml-apis'
 			exclude group: 'xerces', module: 'xercesImpl'
 			exclude group: 'xalan', module: 'xalan'
 		}
-		optional("org.apache.ws.xmlschema:xmlschema-core:2.0.2")
+		optional("org.apache.ws.xmlschema:xmlschema-core:$xmlSchemaVersion")
 
 		// SOAP
 		optional("org.apache.ws.commons.axiom:axiom-api:$axiomVersion")
@@ -172,17 +205,17 @@ project('spring-ws-core') {
 		}
 
 		// WSDL
-		optional("wsdl4j:wsdl4j:1.6.1")
+		optional("wsdl4j:wsdl4j:$wsdl4jVersion")
 
 		// Transport
-		provided("javax.servlet:servlet-api:2.5")
-		optional("org.apache.httpcomponents:httpclient:4.2.5")
-		optional("commons-httpclient:commons-httpclient:3.1")
-		testCompile("org.mortbay.jetty:jetty:6.1.26")
+		provided("javax.servlet:javax.servlet-api:$servletApiVersion")
+		optional("org.apache.httpcomponents:httpclient:$httpComponentsHttpClientVersion")
+		optional("commons-httpclient:commons-httpclient:$commonsHttpClientVersion")
+		testCompile("org.mortbay.jetty:jetty:$jettyVersion")
 
-		testCompile("log4j:log4j:1.2.16")
-		testCompile("org.aspectj:aspectjrt:1.6.9")
-		testRuntime("org.aspectj:aspectjweaver:1.6.9")
+		testCompile("log4j:log4j:$log4jVersion")
+		testCompile("org.aspectj:aspectjrt:$aspectjVersion")
+		testRuntime("org.aspectj:aspectjweaver:$aspectjVersion")
 	}
 }
 
@@ -198,13 +231,13 @@ project('spring-ws-support') {
 		testCompile("org.springframework:spring-test:$springVersion")
 
 		// Transport
-		provided("org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1")
-		provided("org.apache.geronimo.specs:geronimo-ejb_2.1_spec:1.1")
-		provided("javax.mail:mail:1.4.5")
-		optional("jivesoftware:smack:3.1.0")
-		testCompile("commons-httpclient:commons-httpclient:3.1")
-		testRuntime("org.apache.activemq:activemq-core:4.1.2")
-		testCompile("org.jvnet.mock-javamail:mock-javamail:1.6")
+		provided("org.apache.geronimo.specs:geronimo-jms_1.1_spec:$jms11SpecVersion")
+		provided("org.apache.geronimo.specs:geronimo-ejb_2.1_spec:$ejb21SpecVersion")
+		provided("javax.mail:mail:$javaxMailVersion")
+		optional("org.igniterealtime.smack:smack:$smackVersion")
+		testCompile("commons-httpclient:commons-httpclient:$commonsHttpClientVersion")
+		testRuntime("org.apache.activemq:activemq-broker:$activeMqVersion")
+		testCompile("org.jvnet.mock-javamail:mock-javamail:$mockJavaMailVersion")
   }
 }
 
@@ -219,19 +252,19 @@ project('spring-ws-security') {
 		compile("org.springframework:spring-tx:$springVersion")
 
 		// Spring Security
-		compile("org.springframework.security:spring-security-core:3.1.0.RELEASE")
-		optional("net.sf.ehcache:ehcache:2.6.3") {
+		compile("org.springframework.security:spring-security-core:$springSecurityVersion")
+		optional("net.sf.ehcache:ehcache:$ehcacheVersion") {
 		  exclude group: 'net.sf.ehcache', module: 'ehcache-terracotta'
 		}
 
 		// WS-Security
-		optional("com.sun.xml.wss:xws-security:3.0") {
+		optional("com.sun.xml.wss:xws-security:$xwsSecurityVersion") {
 			exclude group: 'javax.xml.crypto', module: 'xmldsig'
 		}
-		optional("org.apache.ws.security:wss4j:1.6.5")
+		optional("org.apache.ws.security:wss4j:$wss4jVersion")
 
 		// SOAP
-		provided("com.sun.xml.messaging.saaj:saaj-impl:1.3.19")
+		provided("com.sun.xml.messaging.saaj:saaj-impl:$saajImplVersion")
 		optional("org.apache.ws.commons.axiom:axiom-api:$axiomVersion")
 		optional("org.apache.ws.commons.axiom:axiom-impl:$axiomVersion") {
 			exclude group: 'org.codehaus.woodstox', module: 'wstx-asl'
@@ -247,11 +280,11 @@ project('spring-ws-test') {
 		compile project(":spring-xml")
 		compile project(":spring-ws-core")
 
-        // Spring
+		// Spring
 		compile("org.springframework:spring-context:$springVersion")
 
 
-		compile("xmlunit:xmlunit:1.1")
+		compile("xmlunit:xmlunit:$xmlUnitVersion")
 		testCompile("org.springframework:spring-test:$springVersion")
 	}
 
