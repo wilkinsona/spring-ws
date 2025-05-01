@@ -37,7 +37,10 @@ public class ConventionsPlugin implements Plugin<Project> {
 			new JavaBasePluginConventions().apply(project);
 			new CheckstyleConventions().apply(project);
 		});
-		project.getPlugins().withType(JavaPlugin.class).all((plugin) -> new JavaPluginConventions().apply(project));
+		project.getPlugins().withType(JavaPlugin.class).all((plugin) -> {
+			new NullabilityPlugin().apply(project);
+			new JavaPluginConventions().apply(project);
+		});
 		project.getPlugins()
 			.withType(MavenPublishPlugin.class)
 			.all((plugin) -> new MavenPublishPluginConventions().apply(project));

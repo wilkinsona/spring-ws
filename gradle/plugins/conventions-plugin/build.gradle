@@ -6,6 +6,7 @@ plugins {
 
 repositories {
 	mavenCentral()
+	gradlePluginPortal()
 }
 
 dependencies {
@@ -24,4 +25,5 @@ gradlePlugin {
 
 dependencies {
 	implementation("io.spring.javaformat:spring-javaformat-gradle-plugin:$javaFormatVersion")
+	implementation("net.ltgt.errorprone:net.ltgt.errorprone.gradle.plugin:${errorProneVersion}")
 }
