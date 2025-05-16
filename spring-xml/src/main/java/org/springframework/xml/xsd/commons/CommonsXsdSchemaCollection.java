@@ -32,6 +32,7 @@ import org.apache.ws.commons.schema.XmlSchemaInclude;
 import org.apache.ws.commons.schema.XmlSchemaObject;
 import org.apache.ws.commons.schema.resolver.DefaultURIResolver;
 import org.apache.ws.commons.schema.resolver.URIResolver;
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.InputSource;
 
 import org.springframework.beans.factory.InitializingBean;
@@ -74,6 +75,7 @@ public class CommonsXsdSchemaCollection implements XsdSchemaCollection, Initiali
 
 	private URIResolver uriResolver = new ClasspathUriResolver();
 
+	@Nullable
 	private ResourceLoader resourceLoader;
 
 	/**
@@ -82,6 +84,7 @@ public class CommonsXsdSchemaCollection implements XsdSchemaCollection, Initiali
 	 * A subsequent call to the {@link #setXsds(Resource[])} is required.
 	 */
 	public CommonsXsdSchemaCollection() {
+		this(new Resource[0]);
 	}
 
 	/**

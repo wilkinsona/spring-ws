@@ -25,6 +25,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -56,8 +57,10 @@ public class SimpleXsdSchema implements XsdSchema, InitializingBean {
 
 	private static final QName SCHEMA_NAME = new QName(SCHEMA_NAMESPACE, "schema", "xsd");
 
+	@SuppressWarnings("NullAway.Init")
 	private Resource xsdResource;
 
+	@Nullable
 	private Element schemaElement;
 
 	static {

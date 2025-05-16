@@ -16,6 +16,7 @@
 
 package org.springframework.xml.sax;
 
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
 import org.xml.sax.EntityResolver;
@@ -38,18 +39,23 @@ import org.xml.sax.ext.LexicalHandler;
  */
 public abstract class AbstractXmlReader implements XMLReader {
 
+	@Nullable
 	private DTDHandler dtdHandler;
 
+	@Nullable
 	private ContentHandler contentHandler;
 
+	@Nullable
 	private EntityResolver entityResolver;
 
+	@Nullable
 	private ErrorHandler errorHandler;
 
+	@Nullable
 	private LexicalHandler lexicalHandler;
 
 	@Override
-	public ContentHandler getContentHandler() {
+	public @Nullable ContentHandler getContentHandler() {
 		return this.contentHandler;
 	}
 
@@ -64,12 +70,12 @@ public abstract class AbstractXmlReader implements XMLReader {
 	}
 
 	@Override
-	public DTDHandler getDTDHandler() {
+	public @Nullable DTDHandler getDTDHandler() {
 		return this.dtdHandler;
 	}
 
 	@Override
-	public EntityResolver getEntityResolver() {
+	public @Nullable EntityResolver getEntityResolver() {
 		return this.entityResolver;
 	}
 
@@ -79,7 +85,7 @@ public abstract class AbstractXmlReader implements XMLReader {
 	}
 
 	@Override
-	public ErrorHandler getErrorHandler() {
+	public @Nullable ErrorHandler getErrorHandler() {
 		return this.errorHandler;
 	}
 
@@ -88,7 +94,7 @@ public abstract class AbstractXmlReader implements XMLReader {
 		this.errorHandler = errorHandler;
 	}
 
-	protected LexicalHandler getLexicalHandler() {
+	protected @Nullable LexicalHandler getLexicalHandler() {
 		return this.lexicalHandler;
 	}
 
@@ -116,7 +122,7 @@ public abstract class AbstractXmlReader implements XMLReader {
 	 * {@code http://xml.org/sax/properties/lexical-handler}.
 	 */
 	@Override
-	public Object getProperty(String name) throws SAXNotRecognizedException, SAXNotSupportedException {
+	public @Nullable Object getProperty(String name) throws SAXNotRecognizedException, SAXNotSupportedException {
 		if ("http://xml.org/sax/properties/lexical-handler".equals(name)) {
 			return this.lexicalHandler;
 		}
