@@ -19,6 +19,8 @@ package org.springframework.ws.context;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.springframework.util.StringUtils;
 
 /**
@@ -33,6 +35,7 @@ public abstract class AbstractMessageContext implements MessageContext {
 	 * Keys are {@code Strings}, values are {@code Objects}. Lazily initialized by
 	 * {@code getProperties()}.
 	 */
+	@Nullable
 	private Map<String, Object> properties;
 
 	@Override
@@ -41,7 +44,7 @@ public abstract class AbstractMessageContext implements MessageContext {
 	}
 
 	@Override
-	public Object getProperty(String name) {
+	public @Nullable Object getProperty(String name) {
 		return getProperties().get(name);
 	}
 
