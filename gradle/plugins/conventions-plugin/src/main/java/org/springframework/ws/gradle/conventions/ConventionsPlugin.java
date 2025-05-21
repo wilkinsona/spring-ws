@@ -16,6 +16,7 @@
 
 package org.springframework.ws.gradle.conventions;
 
+import io.spring.gradle.nullability.NullabilityPlugin;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -38,7 +39,7 @@ public class ConventionsPlugin implements Plugin<Project> {
 			new CheckstyleConventions().apply(project);
 		});
 		project.getPlugins().withType(JavaPlugin.class).all((plugin) -> {
-			new NullabilityPlugin().apply(project);
+			project.getPlugins().apply(NullabilityPlugin.class);
 			new JavaPluginConventions().apply(project);
 		});
 		project.getPlugins()
